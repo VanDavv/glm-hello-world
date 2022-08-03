@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
+import os
+os.environ["YAGNA_APPKEY"] = "55359a3e7afb4525be26fff47accc41f"
 import asyncio
 import logging
-import os
 import pathlib
 from typing import AsyncIterable
 
@@ -11,7 +12,6 @@ from yapapi.log import enable_default_logger
 from yapapi.payload import vm
 
 log = logging.getLogger(__name__)
-os.environ["YAGNA_APPKEY"] = "55359a3e7afb4525be26fff47accc41f"
 
 
 async def worker(context: WorkContext, tasks: AsyncIterable[Task]):
@@ -39,8 +39,9 @@ async def main():
                 print(completed.result.stdout)
     except NoPaymentAccountError:
         raise
-    except ClientConnectorError as ex:
+    except (ConnectionResetError, ClientConnectorError) as ex:
         log.error(f"Yagna client is not running!\nPlease run \"yagna service run\" or consult the docs\nError: {ex}")
+        raise
 
 
 if __name__ == "__main__":
