@@ -36,11 +36,10 @@ async def main():
         async with Golem(budget=1.0, subnet_tag="devnet-beta") as golem:
             async for completed in golem.execute_tasks(worker, tasks, payload=package):
                 print(completed.result.stdout)
-    except NoPaymentAccountError:
-        raise
+    except NoPaymentAccountError as ex:
+        log.error(f"Sender is not initialized!\nPlease run \"yagna payment init --sender\" or consult the docs\nError: {ex}")
     except (ConnectionResetError, ClientConnectorError) as ex:
         log.error(f"Yagna client is not running!\nPlease run \"yagna service run\" or consult the docs\nError: {ex}")
-        raise
 
 
 if __name__ == "__main__":
