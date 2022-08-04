@@ -12,6 +12,7 @@ Prerequisites:
 
 - Python 3.6 or higher
 - (optional) Fresh virtual environment
+- Yagna daemon running ([docs](https://handbook.golem.network/requestor-tutorials/flash-tutorial-of-requestor-development))
 
 Install packages
 
